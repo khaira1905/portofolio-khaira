@@ -111,7 +111,7 @@ async function loadProjects() {
   }
 }
 
-// 3. Fungsi Mengambil Data Sertifikat dari Firestore
+// 3. Fungsi Mengambil Data Sertifikat dari Firestore (Layout disamakan persis dengan Proyek)
 async function loadCertificates() {
   const container = document.querySelector('#certificates-container')
   try {
@@ -127,18 +127,18 @@ async function loadCertificates() {
       const data = doc.data()
       cardsHTML += `
         <div class="project-card">
-          <img src="${data.imageUrl || '/sertifikat-technova.jpg'}" alt="${data.title}" class="project-img">
+          <img src="${data.imageUrl || '/sertifikat-technova.jpg'}" alt="${data.title || 'Sertifikat'}" class="project-img">
           <div class="project-info">
-            <span class="tag" style="background: rgba(234, 179, 8, 0.15); color: #fde047; border: 1px solid rgba(234, 179, 8, 0.3); margin-bottom: 8px; display: inline-block;">
-              🏆 ${data.category || 'Penghargaan'}
-            </span>
             <h3>${data.title || 'Judul Sertifikat'}</h3>
-            <p style="color: #60a5fa; font-size: 0.85rem; margin-bottom: 4px;">${data.issuer || ''}</p>
-            <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 12px;">${data.date || ''}</p>
             <p>${data.description || 'Deskripsi sertifikat.'}</p>
             <div class="project-tech">
               ${(data.tech || []).map(t => `<span class="tag">${t}</span>`).join('')}
             </div>
+            ${data.credentialUrl ? `
+              <div class="project-links">
+                <a href="${data.credentialUrl}" target="_blank" class="project-link">Lihat Sertifikat ↗</a>
+              </div>
+            ` : ''}
           </div>
         </div>
       `
