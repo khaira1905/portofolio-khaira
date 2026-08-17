@@ -256,14 +256,55 @@ body {
   gap: 2rem;
 }
 
+/* Container Kartu Proyek */
 .project-card {
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  overflow: hidden;
-  transition: all 0.3s ease;
+  background-color: #0f172a; /* Warna latar belakang kartu */
+  border-radius: 12px;
+  overflow: hidden; /* Agar sudut gambar terpotong melengkung mengikuti kartu */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 24px;
+}
+
+/* Pengaturan Ukuran Gambar */
+.project-card img {
+  width: 100%;
+  height: 220px; /* Membatasi tinggi gambar */
+  object-fit: cover; /* Pemotongan proporsional */
+  object-position: top; /* Menampilkan bagian atas gambar */
+  display: block;
+}
+
+/* Pembungkus Teks & Tag */
+.project-content {
+  padding: 20px;
+}
+
+.project-content h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: #ffffff;
+  font-size: 1.25rem;
+}
+
+.project-content p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.tags {
   display: flex;
-  flex-direction: column;
+  gap: 8px;
+}
+
+.tag {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  border: 1px solid rgba(96, 165, 250, 0.3);
 }
 
 .project-card:hover {
