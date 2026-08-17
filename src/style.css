@@ -268,7 +268,7 @@ body {
 /* Pengaturan Ukuran Gambar Proyek */
 .project-card img {
   width: 100%;
-  height: 320px; /* Samakan tinggi gambar dengan kartu UI/UX Sipasti */
+  height: 270px; /* Ukuran tinggi yang sama persis dengan kartu Sipasti */
   object-fit: cover;
   object-position: top center;
   display: block;
