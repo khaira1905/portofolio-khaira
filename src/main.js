@@ -10,6 +10,7 @@ document.querySelector('#app').innerHTML = `
     <ul class="nav-links">
       <li><a href="#about">Tentang</a></li>
       <li><a href="#projects">Proyek</a></li>
+      <li><a href="#certificates">Sertifikat</a></li>
       <li><a href="#contact">Kontak</a></li>
     </ul>
   </nav>
@@ -56,6 +57,19 @@ document.querySelector('#app').innerHTML = `
       <p style="color: #94a3b8;">Memuat proyek dari database...</p>
     </div>
   </section>
+
+  <!-- Section Certificates -->
+  <section class="certificates-section" id="certificates">
+    <div class="section-header">
+      <span class="section-subtitle">Prestasi & Penghargaan</span>
+      <h2 class="section-title">Sertifikat & Pencapaian</h2>
+    </div>
+
+    <!-- Container tempat data sertifikat dari Firebase akan muncul -->
+    <div class="projects-grid" id="certificates-container">
+      <p style="color: #94a3b8;">Memuat sertifikat dari database...</p>
+    </div>
+  </section>
 `
 
 // 2. Fungsi Mengambil Data Proyek dari Firestore
@@ -92,10 +106,51 @@ async function loadProjects() {
 
     container.innerHTML = cardsHTML
   } catch (error) {
-    console.error("Gagal mengambil data:", error)
+    console.error("Gagal mengambil data proyek:", error)
     container.innerHTML = `<p style="color: #f87171;">Gagal memuat proyek. Cek console browser.</p>`
+  }
+}
+
+// 3. Fungsi Mengambil Data Sertifikat dari Firestore
+async function loadCertificates() {
+  const container = document.querySelector('#certificates-container')
+  try {
+    const querySnapshot = await getDocs(collection(db, 'certificates'))
+    
+    if (querySnapshot.empty) {
+      container.innerHTML = `<p style="color: #94a3b8;">Belum ada sertifikat yang ditambahkan di Firebase.</p>`
+      return
+    }
+
+    let cardsHTML = ''
+    querySnapshot.forEach((doc) => {
+      const data = doc.data()
+      cardsHTML += `
+        <div class="project-card">
+          <img src="${data.imageUrl || '/sertifikat-technova.jpg'}" alt="${data.title}" class="project-img">
+          <div class="project-info">
+            <span class="tag" style="background: rgba(234, 179, 8, 0.15); color: #fde047; border: 1px solid rgba(234, 179, 8, 0.3); margin-bottom: 8px; display: inline-block;">
+              🏆 ${data.category || 'Penghargaan'}
+            </span>
+            <h3>${data.title || 'Judul Sertifikat'}</h3>
+            <p style="color: #60a5fa; font-size: 0.85rem; margin-bottom: 4px;">${data.issuer || ''}</p>
+            <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 12px;">${data.date || ''}</p>
+            <p>${data.description || 'Deskripsi sertifikat.'}</p>
+            <div class="project-tech">
+              ${(data.tech || []).map(t => `<span class="tag">${t}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      `
+    })
+
+    container.innerHTML = cardsHTML
+  } catch (error) {
+    console.error("Gagal mengambil data sertifikat:", error)
+    container.innerHTML = `<p style="color: #f87171;">Gagal memuat sertifikat. Cek console browser.</p>`
   }
 }
 
 // Jalankan pemanggilan data
 loadProjects()
+loadCertificates()
